@@ -12,11 +12,15 @@ class FirstFit {
 
         PartitionSize = new int[NumOfPartitions];
         PartitionName = new String[NumOfPartitions];
+        ExternalFrag=new int[NumOfPartitions*2];
+
         for (int i = 0; i < NumOfPartitions; i++) {
             System.out.println("Please enter Name of Partition " + (i+1) + ": ");
             PartitionName[i] = s.next();
             System.out.println("Please enter Size of Partition " + (i+1) + ": ");
             PartitionSize[i] = s.nextInt();
+            ExternalFrag[i]=PartitionSize[i];
+
         }
 
 
@@ -35,7 +39,6 @@ class FirstFit {
         PrintPartitons = new int[NumOfPartitions];
         check=new boolean[NumOfPartitions];
         NotAllocated= new String[NumOfProcess];
-        ExternalFrag=new int[NumOfPartitions];
         for (int i =0 ; i< NumOfPartitions;i++)
         {
             PrintPartitons[i]=0;
@@ -89,7 +92,7 @@ class FirstFit {
 
 
 //
-//        System.out.println("Do you want to compact? 1.yes 2.no\n");
+//        System.out.println("Do you want to compact? 1.yes 2.no");
 //        choice= s.nextInt();
 //        if(choice==1)
 //        {
