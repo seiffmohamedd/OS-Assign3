@@ -9,18 +9,27 @@ public class Memory {
         LinkedList<Partition> partitions = new LinkedList<Partition>();
         LinkedList<Process> processes = new LinkedList<Process>();
 
-        for (int i = 0; i < partitionNumber; i++) {
-            System.out.print("Partition" + i + ": ");
+        for (int i = 0; i < partitionNumber; i++){
+
+            String partitionName = reader.next();
+            int partitionId = reader.nextInt();
             int partitionSize = reader.nextInt();
-            Partition partition = new Partition(partitionSize);
+
+            Partition partition = new Partition(partitionName,partitionId ,partitionSize);
+
             partitions.add(partition);
         }
         System.out.println("Enter number of processes: ");
         int processNumber = reader.nextInt();
         for (int i = 1; i <= processNumber; i++) {
-            System.out.print("Process" + i + ": ");
+
+            String processName = reader.next();
+            int processId = reader.nextInt();
             int processSize = reader.nextInt();
-            Process process = new Process(processSize);
+
+
+            Process process = new Process(processName,processId,processSize);
+
             processes.add(process);
         }
 
