@@ -18,7 +18,7 @@ public class BestFit {
 
                 Partition partition = partitionList.get(j);
 
-                if( min < partition.getSize() - process.getSize() && partition.getSize() - process.getSize() >=0 && partition.isAvailable())
+                if( min > (partition.getSize() - process.getSize()) && (partition.getSize() - process.getSize()) >=0 && partition.isAvailable())
                 {
                     min = partition.getSize() - process.getSize();
                     idx = j;
@@ -64,13 +64,13 @@ public class BestFit {
         for (Partition p : partitionList) {
             if (!p.isAvailable()) {
                 System.out.println(
-                        p.getName() + " (" + p.getSize() + ") => " +
+                        p.getName() + " " + p.getId() + " (" + p.getSize() + ") => " +
                                 p.getProcess().getName() + " " + p.getProcess().getId()
                 );
             }
             else {
                 System.out.println(
-                        p.getName() + " (" + p.getSize() + ") => External fragment"
+                        p.getName() + " " + p.getId() + " (" + p.getSize() + ") => External fragment"
                 );
             }
         }

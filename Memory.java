@@ -8,7 +8,7 @@ public class Memory {
 
         int partitionNumber = reader.nextInt();
 
-        Partition.setCnt(partitionNumber);
+        Partition.setCnt(partitionNumber-1);
 
         LinkedList<Partition> partitions = new LinkedList<Partition>();
         LinkedList<Process> processes = new LinkedList<Process>();
