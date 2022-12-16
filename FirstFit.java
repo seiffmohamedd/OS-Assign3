@@ -1,25 +1,30 @@
+import java.util.LinkedList;
 import java.util.Scanner;
 
 class FirstFit {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        int NumOfPartitions, PartitionSize[], NumOfProcess, ProcessSize[], ans = 0,PrintPartitons[],choice=0,ExternalFrag[];
+        int NumOfPartitions, PartitionSize[], NumOfProcess, ProcessSize[], ans = 0,choice=0,ExternalFrag[],ctr=0;
         boolean check[];
         String PartitionName[], ProcessName[],NotAllocated[];
+        LinkedList<Integer> NewPart = new LinkedList<Integer>();
+        LinkedList<Integer> PrintPartitons = new LinkedList<Integer>();
+        LinkedList<String> PrintName = new LinkedList<String>();
+
 
         System.out.println("Please enter Number of Partitions: ");
         NumOfPartitions = s.nextInt();
 
         PartitionSize = new int[NumOfPartitions];
         PartitionName = new String[NumOfPartitions];
-        ExternalFrag=new int[NumOfPartitions*2];
+//        ExternalFrag=new int[NumOfPartitions*2];
 
         for (int i = 0; i < NumOfPartitions; i++) {
             System.out.println("Please enter Name of Partition " + (i+1) + ": ");
             PartitionName[i] = s.next();
             System.out.println("Please enter Size of Partition " + (i+1) + ": ");
             PartitionSize[i] = s.nextInt();
-            ExternalFrag[i]=PartitionSize[i];
+//            ExternalFrag[i]=PartitionSize[i];
 
         }
 
@@ -36,12 +41,13 @@ class FirstFit {
             ProcessSize[i] = s.nextInt();
         }
 
-        PrintPartitons = new int[NumOfPartitions];
         check=new boolean[NumOfPartitions];
+
         NotAllocated= new String[NumOfProcess];
+
         for (int i =0 ; i< NumOfPartitions;i++)
         {
-            PrintPartitons[i]=0;
+            PrintPartitons.add(0);
             check[i]=false;
             if( i<NumOfProcess)
             {
@@ -53,38 +59,48 @@ class FirstFit {
         {
             for (int j =0 ; j < NumOfPartitions ; j++)
             {
-                if(ProcessSize[i]<=PartitionSize[j]&&check[j]==false)
+                if(ctr!=NumOfPartitions){
+                    NewPart.add( PartitionSize[j]);
+                    ctr++;
+                }
+                if(ProcessSize[i]<= NewPart.get(j) &&check[j]==false)
                 {
-                    int sub=PartitionSize[j]-ProcessSize[i];
-                    PrintPartitons[j]=ProcessSize[i];
-                    ans+=sub;
+                    int sub=NewPart.get(j)-ProcessSize[i];
+                    PrintPartitons.add(j,ProcessSize[i]);
+                    NewPart.add(j+1, sub);
+//                    PrintName.add(ProcessName[i]);
                     check[j]=true;
                     NotAllocated[i]=ProcessName[i];
-                    ExternalFrag[j]=sub;
                     i++;
                     j=0;
-
 
                 }
             }
 
         }
 
-        for (int i=0 ; i < NumOfPartitions;i++)
+//        for (int i=0 ; i < NumOfPartitions;i++)
+        int ctrr=0;
+        for (int i=0 ; i < PrintPartitons.size();i++)
         {
-            if(PrintPartitons[i]==0)
+
+            if(PrintPartitons.get(i) ==0)
             {
-                System.out.println(PartitionName[i]+" "+PartitionSize[i]+ " "+"=> "+ "External Fragmentation");
+//                System.out.println(PartitionName[i]+" "+PartitionSize[i]+ " "+"=> "+ "External Fragmentation"); //DONE
+                System.out.println(PrintPartitons.get(i)+ " "+"=> "+ "External Fragmentation"); //DONE
+
 
             }
             else {
-                System.out.println(PartitionName[i]+" "+PartitionSize[i]+ " "+"=> "+PrintPartitons[i]);
+//                System.out.println(PartitionName[i]+" "+PrintPartitons.get(i)+ " "+"=> "+ ProcessName[i]);
+                System.out.println(PrintPartitons.get(i));
+                ctrr++;
             }
         }
 
         for (int i=0 ; i < NumOfProcess;i++)
         {
-            if(i<NumOfProcess && NotAllocated[i]==" " )
+            if(NotAllocated[i]==" " )
             {
                 System.out.println(ProcessName[i] +" "+ "Cannot be Allocated");
             }
