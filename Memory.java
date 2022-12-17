@@ -48,9 +48,9 @@ public class Memory {
 //            Scanner compacting = new Scanner(System.in);
 
             switch (policyNum) {
-//                case 1:
-//                    FirstFit firstFit = new FirstFit(partitions, processes);
-//                    firstFit.display();
+                case 1:
+                    FirstFit firstFit = new FirstFit(partitions, processes);
+                    firstFit.display();
 //
 //                    System.out.println("Do you want to compact? 1.yes 2.no");
 //                    int compact = compacting.nextInt();
@@ -58,7 +58,7 @@ public class Memory {
 //                        Compaction compaction = new Compaction(firstFit.getPartitions());
 //                        compaction.display();
 //                    }
-//                    break;
+                    break;
                 case 2:
                     WorstFit worstFit = new WorstFit(partitions, processes);
                     worstFit.display();
