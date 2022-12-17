@@ -59,17 +59,17 @@ public class Memory {
 //                        compaction.display();
 //                    }
 //                    break;
-//                case 2:
-//                    WorstFit worstFit = new WorstFit(partitions, processes);
-//                    worstFit.display();
-//
+                case 2:
+                    WorstFit worstFit = new WorstFit(partitions, processes);
+                    worstFit.display();
+
 //                    System.out.println("Do you want to compact? 1.yes 2.no");
 //                    int compact1 = compacting.nextInt();
 //                    if(compact1==1){
 //                        Compaction compaction = new Compaction(worstFit.getPartitions());
 //                        compaction.display();
 //                    }
-//                    break;
+                    break;
                 case 3:
                     BestFit bestFit = new BestFit(partitions, processes);
                     bestFit.display();

@@ -7,19 +7,19 @@ public class WorstFit {
 
     private LinkedList <Process>   unallocatedProcesses = new LinkedList<Process>();
 
-    private void goBest(){
+    private void beWorst(){
         for (int i = 0; i < processesList.size(); i++) {
 
             Process process = processesList.get(i);
-            int min = 1000000,idx = -1;
+            int max = -100000,idx = -1;
 
             for (int j = 0; j < partitionList.size(); j++) {
 
                 Partition partition = partitionList.get(j);
 
-                if( min > (partition.getSize() - process.getSize()) && (partition.getSize() - process.getSize()) >=0 && partition.isAvailable())
+                if( max < (partition.getSize() - process.getSize()) && (partition.getSize() - process.getSize()) >=0 && partition.isAvailable())
                 {
-                    min = partition.getSize() - process.getSize();
+                    max = partition.getSize() - process.getSize();
                     idx = j;
                 }
 
@@ -40,11 +40,11 @@ public class WorstFit {
 
                 partitionList.set(idx,p);
 
-                if(min > 0){
+                if(max > 0){
 
                     Partition.setCnt(Partition.getCnt()+1);
 
-                    Partition newPart = new Partition(p.getName(),Partition.getCnt(),min);
+                    Partition newPart = new Partition(p.getName(),Partition.getCnt(),max);
 
                     partitionList.add(idx+1,newPart);
                 }
@@ -53,10 +53,10 @@ public class WorstFit {
         }
     }
 
-    public BestFit(LinkedList<Partition> partitionList, LinkedList<Process> processesList) {
+    public WorstFit(LinkedList<Partition> partitionList, LinkedList<Process> processesList) {
         this.partitionList = partitionList;
         this.processesList = processesList;
-        goBest();
+        beWorst();
     }
     public void display(){
 
