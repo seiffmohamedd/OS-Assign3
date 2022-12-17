@@ -8,6 +8,8 @@ public class BestFit {
 
     private LinkedList <Process>   unallocatedProcesses = new LinkedList<Process>();
 
+
+
     private void goBest(){
         for (int i = 0; i < processesList.size(); i++) {
 
@@ -80,5 +82,13 @@ public class BestFit {
                     process.getName() + " " + process.getId() + " can not be allocated"
             );
         }
+    }
+
+    public LinkedList<Partition> getPartitionList() {
+        return partitionList;
+    }
+
+    public LinkedList<Process> getUnallocatedProcesses() {
+        return unallocatedProcesses;
     }
 }

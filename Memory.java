@@ -45,41 +45,41 @@ public class Memory {
 
             int policyNum = policy.nextInt();
 
-//            Scanner compacting = new Scanner(System.in);
+            Scanner compacting = new Scanner(System.in);
 
             switch (policyNum) {
-//                case 1:
-//                    FirstFit firstFit = new FirstFit(partitions, processes);
-//                    firstFit.display();
-//
-//                    System.out.println("Do you want to compact? 1.yes 2.no");
-//                    int compact = compacting.nextInt();
-//                    if(compact == 1){
-//                        Compaction compaction = new Compaction(firstFit.getPartitions());
-//                        compaction.display();
-//                    }
-//                    break;
+                case 1:
+                    FirstFit firstFit = new FirstFit(partitions, processes);
+                    firstFit.display();
+
+                    System.out.println("Do you want to compact? 1.yes 2.no");
+                    int compact = compacting.nextInt();
+                    if(compact == 1){
+                        Compaction compaction = new Compaction(firstFit);
+                        compaction.letsCompact();
+                    }
+                    break;
                 case 2:
                     WorstFit worstFit = new WorstFit(partitions, processes);
                     worstFit.display();
 
-//                    System.out.println("Do you want to compact? 1.yes 2.no");
-//                    int compact1 = compacting.nextInt();
-//                    if(compact1==1){
-//                        Compaction compaction = new Compaction(worstFit.getPartitions());
-//                        compaction.display();
-//                    }
+                    System.out.println("Do you want to compact? 1.yes 2.no");
+                    int compact1 = compacting.nextInt();
+                    if(compact1==1){
+                        Compaction compaction = new Compaction(worstFit);
+                        compaction.letsCompact();
+                    }
                     break;
                 case 3:
                     BestFit bestFit = new BestFit(partitions, processes);
                     bestFit.display();
 
-//                    System.out.println("Do you want to compact? 1.yes 2.no");
-//                    int compact2 = compacting.nextInt();
-//                    if(compact2==1){
-//                        Compaction compaction = new Compaction(bestFit.getPartitions());
-//                        compaction.display();
-//                    }
+                    System.out.println("Do you want to compact? 1.yes 2.no");
+                    int compact2 = compacting.nextInt();
+                    if(compact2==1){
+                        Compaction compaction = new Compaction(bestFit);
+                        compaction.letsCompact();
+                    }
                     break;
             }
         }

@@ -80,4 +80,12 @@ public class WorstFit {
             );
         }
     }
+
+    public LinkedList<Partition> getPartitionList() {
+        return partitionList;
+    }
+
+    public LinkedList<Process> getUnallocatedProcesses() {
+        return unallocatedProcesses;
+    }
 }
