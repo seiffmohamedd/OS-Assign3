@@ -1,123 +1,89 @@
 import java.util.LinkedList;
-import java.util.Scanner;
 
-class FirstFit {
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        int NumOfPartitions, PartitionSize[], NumOfProcess, ProcessSize[], ans = 0,choice=0,ExternalFrag[],ctr=0;
-        boolean check[];
-        String PartitionName[], ProcessName[],NotAllocated[];
-        LinkedList<Integer> NewPart = new LinkedList<Integer>();
-        LinkedList<Integer> PrintPartitons = new LinkedList<Integer>();
-        LinkedList<String> PrintName = new LinkedList<String>();
+public class FirstFit {
 
+    private LinkedList <Partition> partitionList = new LinkedList<Partition>();
 
-        System.out.println("Please enter Number of Partitions: ");
-        NumOfPartitions = s.nextInt();
+    private LinkedList <Process>   processesList = new LinkedList<Process>();
 
-        PartitionSize = new int[NumOfPartitions];
-        PartitionName = new String[NumOfPartitions];
-//        ExternalFrag=new int[NumOfPartitions*2];
+    private LinkedList <Process>   unallocatedProcesses = new LinkedList<Process>();
 
-        for (int i = 0; i < NumOfPartitions; i++) {
-            System.out.println("Please enter Name of Partition " + (i+1) + ": ");
-            PartitionName[i] = s.next();
-            System.out.println("Please enter Size of Partition " + (i+1) + ": ");
-            PartitionSize[i] = s.nextInt();
-//            ExternalFrag[i]=PartitionSize[i];
+    private void First(){
 
-        }
+        for (int i = 0; i < processesList.size(); i++) {
 
+            Process process = processesList.get(i);
+            int sub = 0,idx = -1;
 
-        System.out.println("Please enter Number of Process Requests: ");
-        NumOfProcess = s.nextInt();
-        ProcessSize = new int[NumOfProcess];
-        ProcessName = new String[NumOfProcess];
+            for (int j = 0; j < partitionList.size(); j++) {
 
-        for (int i = 0; i < NumOfProcess; i++) {
-            System.out.println("Please enter Name of Process " + (i+1) + ": ");
-            ProcessName[i] = s.next();
-            System.out.println("Please enter Size of Process " + (i+1) + ": ");
-            ProcessSize[i] = s.nextInt();
-        }
+                Partition partition = partitionList.get(j);
 
-        check=new boolean[NumOfPartitions];
-
-        NotAllocated= new String[NumOfProcess];
-
-        for (int i =0 ; i< NumOfPartitions;i++)
-        {
-            PrintPartitons.add(0);
-            check[i]=false;
-            if( i<NumOfProcess)
-            {
-                NotAllocated[i]=" ";
-            }
-        }
-
-        for (int i =0 ; i < NumOfProcess;i++)
-        {
-            for (int j =0 ; j < NumOfPartitions ; j++)
-            {
-                if(ctr!=NumOfPartitions){
-                    NewPart.add( PartitionSize[j]);
-                    ctr++;
-                }
-                if(ProcessSize[i]<= NewPart.get(j) &&check[j]==false)
+                if((partition.getSize() >= process.getSize()) && partition.isAvailable())
                 {
-                    int sub=NewPart.get(j)-ProcessSize[i];
-                    PrintPartitons.add(j,ProcessSize[i]);
-                    NewPart.add(j+1, sub);
-//                    PrintName.add(ProcessName[i]);
-                    check[j]=true;
-                    NotAllocated[i]=ProcessName[i];
-                    i++;
-                    j=0;
+                    sub = partition.getSize() - process.getSize();
+                    idx = j;
+                    break;
+                }
 
+            }
+            if( idx == -1 )
+            {
+                unallocatedProcesses.add(process);
+                continue;
+            }
+            else
+            {
+                Partition p =  partitionList.get(idx);
+
+                p.setAvailable(false);
+                p.setSize(process.getSize());
+                p.setProcess(process);
+
+                partitionList.set(idx,p);
+                if(sub > 0){
+                    Partition.setCnt(Partition.getCnt()+1);
+                    Partition newPart = new Partition(p.getName(),Partition.getCnt(),sub);
+                    partitionList.add(idx+1,newPart);
                 }
             }
-
         }
+    }
 
-//        for (int i=0 ; i < NumOfPartitions;i++)
-        int ctrr=0;
-        for (int i=0 ; i < PrintPartitons.size();i++)
-        {
+    public FirstFit(LinkedList<Partition> partitionList, LinkedList<Process> processesList) {
+        this.partitionList = partitionList;
+        this.processesList = processesList;
+        First();
+    }
 
-            if(PrintPartitons.get(i) ==0)
-            {
-//                System.out.println(PartitionName[i]+" "+PartitionSize[i]+ " "+"=> "+ "External Fragmentation"); //DONE
-                System.out.println(PrintPartitons.get(i)+ " "+"=> "+ "External Fragmentation"); //DONE
+    public void display(){
 
-
+        for (Partition p : partitionList) {
+            if (!p.isAvailable()) {
+                System.out.println(
+                        p.getName() + " " + p.getId() + " (" + p.getSize() + ") => " +
+                                p.getProcess().getName() + " " + p.getProcess().getId()
+                );
             }
             else {
-//                System.out.println(PartitionName[i]+" "+PrintPartitons.get(i)+ " "+"=> "+ ProcessName[i]);
-                System.out.println(PrintPartitons.get(i));
-                ctrr++;
+                System.out.println(
+                        p.getName() + " " + p.getId() + " (" + p.getSize() + ") => External fragment"
+                );
             }
         }
 
-        for (int i=0 ; i < NumOfProcess;i++)
-        {
-            if(NotAllocated[i]==" " )
-            {
-                System.out.println(ProcessName[i] +" "+ "Cannot be Allocated");
-            }
+        for (Process process : unallocatedProcesses) {
+            System.out.println(
+                    process.getName() + " " + process.getId() + " can not be allocated"
+            );
         }
+    }
 
+    public LinkedList<Partition> getPartitionList() {
+        return partitionList;
+    }
 
-//
-//        System.out.println("Do you want to compact? 1.yes 2.no");
-//        choice= s.nextInt();
-//        if(choice==1)
-//        {
-//
-//
-//        }
-//        else {return;}
-
-
-
+    public LinkedList<Process> getUnallocatedProcesses() {
+        return unallocatedProcesses;
     }
 }
