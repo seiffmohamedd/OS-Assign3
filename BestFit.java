@@ -58,18 +58,21 @@ public class BestFit {
 
     public BestFit(final LinkedList<Partition> partitionList, final LinkedList<Process> processesList) {
         for (Partition partition:partitionList) {
-            Partition tmp = new Partition(partition.getName(),partition.getId(),partition.getSize());
+            Partition tmp = new Partition(partition.getName(),partition.getId(),partition.getSize(),partition.isAvailable(),partition.getProcess());
             this.partitionList.add(tmp);
         }
         for (Process process:processesList) {
             Process tmp = new Process(process.getName(),process.getId(),process.getSize());
             this.processesList.add(tmp);
         }
+//        for (Partition part: this.partitionList) {
+//            System.out.println(part.getSize()+ " " + part.isAvailable());
+//        }
         goBest();
     }
     public void display(){
 
-        for (Partition p : partitionList) {
+        for (Partition p : this.partitionList) {
             if (!p.isAvailable()) {
                 System.out.println(
                         p.getName() + " " + p.getId() + " (" + p.getSize() + ") => " +

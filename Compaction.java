@@ -6,6 +6,10 @@ public class Compaction {
     private LinkedList<Process> unallocatedProcesses = new LinkedList<Process>();
 
     private void checkUnallocated() {
+//        for (Partition part: this.compacted) {
+//            System.out.println(part.getSize()+ " " + part.isAvailable());
+//        }
+
         BestFit bestFit = new BestFit(compacted, unallocatedProcesses);
         bestFit.display();
     }

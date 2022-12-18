@@ -17,6 +17,14 @@ public class Partition {
         this.available = true;
     }
 
+    public Partition(String n, int ID, int elSize,boolean available, Process process){
+        this.name = n;
+        this.id = ID;
+        this.size = elSize;
+        this.available = available;
+        this.process = process;
+    }
+
 
     public String getName() {
         return name;
