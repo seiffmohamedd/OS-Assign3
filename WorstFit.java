@@ -53,9 +53,15 @@ public class WorstFit {
         }
     }
 
-    public WorstFit(LinkedList<Partition> partitionList, LinkedList<Process> processesList) {
-        this.partitionList = partitionList;
-        this.processesList = processesList;
+    public WorstFit(final LinkedList<Partition> partitionList,final LinkedList<Process> processesList) {
+        for (Partition partition:partitionList) {
+            Partition tmp = new Partition(partition.getName(),partition.getId(),partition.getSize());
+            this.partitionList.add(tmp);
+        }
+        for (Process process:processesList) {
+            Process tmp = new Process(process.getName(),process.getId(),process.getSize());
+            this.processesList.add(tmp);
+        }
         beWorst();
     }
     public void display(){
