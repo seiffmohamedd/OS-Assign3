@@ -1,0 +1,13 @@
+6
+partition 0 90
+partition 1 20
+partition 2 5
+partition 3 30
+partition 4 120
+partition 5 80
+
+4
+Process 1 15
+Process 2 90
+Process 3 30
+Process 4 100
